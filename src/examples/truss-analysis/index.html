@@ -55,12 +55,16 @@
                   <input type="range" id="height step" min="0" max="6" value="3" step="1">
                 </div>
                 <div>
-                  <label for="Flange section radius">Flange section radius</label>
-                  <input type="range" id="Flange section radius" min="1" max="8" value="3" step="1">
+                  <label for="CrossSection1">CrossSection1</label>
+                  <input type="range" id="CrossSection1" min="1" max="8" value="3" step="1">
                 </div>
                 <div>
-                  <label for="Diagonal section radius">Diagonal section radius</label>
-                  <input type="range" id="Diagonal section radius" min="1" max="6" value="1" step="1">
+                  <label for="CrossSection2">CrossSection2</label>
+                  <input type="range" id="CrossSection2" min="1" max="6" value="1" step="1">
+                </div>
+                <div>
+                  <label for="ShowMesh">ShowMesh</label>
+                  <input type="checkbox" id="ShowMesh" >
                 </div>
                 <div><button id="downloadButton" disabled>Download</button></div>
                 <div><a href="truss.gh" download="truss.gh.html">Save source code</a></div>
@@ -79,7 +83,7 @@ loader.setLibraryPath( 'https://cdn.jsdelivr.net/npm/rhino3dm@0.15.0-beta/' )
 
 // initialise 'data' object that will be used by compute()
 const data = {
-  definition: 'truss.gh',
+  definition: 'truss-analysis.gh',
   inputs: getInputs()
 }
 
@@ -176,7 +180,7 @@ function init() {
  */
 async function compute() {
   // construct url for GET /solve/definition.gh?name=value(&...)
-  const url = new URL('/solve/truss.gh', window.location.origin)
+  const url = new URL('/solve/truss-analysis.gh', window.location.origin)
   Object.keys(data.inputs).forEach(key => url.searchParams.append(key, data.inputs[key]))
   console.log(url.toString())
   
