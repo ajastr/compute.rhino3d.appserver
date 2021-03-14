@@ -234,6 +234,12 @@ async function compute() {
 function collectResults(responseJson) {
 
     const values = responseJson.values
+    console.log()
+
+    let maxAxial = 0
+    let pipeSect1 = 0
+    let pipeSect2 = 0
+
 
     // clear doc
     if( doc !== undefined)
@@ -251,6 +257,19 @@ function collectResults(responseJson) {
         for( let j = 0; j < branch.length; j ++) {
           // ...load rhino geometry into doc
           const rhinoObject = decodeItem(branch[j])
+          // debugger;
+
+          if (values[i].ParamName == "RH_OUT:MaxUtilization") {
+            maxAxial = JSON.parse(responseJson.values[i].InnerTree['{ 0; }'][0].data)
+          }
+          if (values[i].ParamName == "RH_OUT:CrossSection1") {
+            pipeSect1 = JSON.parse(responseJson.values[i].InnerTree['{ 0; }'][0].data)
+          }
+          if (values[i].ParamName == "RH_OUT:CrossSection2") {
+            pipeSect2 = JSON.parse(responseJson.values[i].InnerTree['{ 0; }'][0].data)
+          }
+
+          console.log(values[i].ParamName)
           if (rhinoObject !== null) {
             doc.objects().add(rhinoObject, null)
           }
@@ -259,12 +278,13 @@ function collectResults(responseJson) {
     }
 
     //process data
-    let maxAxial = JSON.parse(responseJson.values[1].InnerTree['{ 0; }'][0].data)
-    let pipeSect1 = JSON.parse(responseJson.values[3].InnerTree['{ 0; }'][0].data)
-    let pipeSect2 = JSON.parse(responseJson.values[2].InnerTree['{ 0; }'][0].data)
-    console.log(maxAxial)
-    console.log(pipeSect1)
-    console.log(pipeSect2)
+
+    // let maxAxial = JSON.parse(responseJson.values[1].InnerTree['{ 0; }'][0].data)
+    // let pipeSect1 = JSON.parse(responseJson.values[3].InnerTree['{ 0; }'][0].data)
+    // let pipeSect2 = JSON.parse(responseJson.values[2].InnerTree['{ 0; }'][0].data)
+    // console.log(maxAxial)
+    // console.log(pipeSect1)
+    // console.log(pipeSect2)
 
     document.getElementById('Utilization').innerText = maxAxial
     document.getElementById('Section1').innerText = pipeSect1
