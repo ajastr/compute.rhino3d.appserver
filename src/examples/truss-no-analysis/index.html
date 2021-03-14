@@ -3,98 +3,67 @@
     <head>
         <meta charset="utf-8">
         <link rel="icon" href="data:,">
-        <title>truss-analysis2.gh</title>
+        <title>truss.gh v2</title>
         <style>
-          body {
-              margin: 0;
-              font-family: monospace;
-          }
-          canvas { width: 100%; height: 100%; }
-          input[type=range] { width: 100%; }
-          #container { position: relative; }
-          #container canvas, #overlay { position: absolute; }
-/*///////////////////////////////////////////////////////////////////////////*/
-          #overlay {
-            z-index: 1;
-            width: 250px;
-            height: 100vh;
-            background-color: rgba(0,0,0,0.1);
-          }
-          #overlay div { padding: 5px 10px; }
-/*///////////////////////////////////////////////////////////////////////////*/
-          #loader {
-              border: 5px solid #8d8d8d; /* Light grey */
-              border-top: 5px solid #b8fa4d; /* Grey */
-              border-radius: 50%;
-              width: 40px;
-              height: 40px;
-              animation: spin 1s linear infinite;
-              position: absolute;
-              top: 50%;
-              left: 50%;
-              z-index: 2;
-          }
-          @keyframes spin {
-              0% { transform: rotate(0deg); }
-              100% { transform: rotate(360deg); }
-          }
-      </style>
+            body {
+                margin: 0;
+                font-family: Arial, Helvetica, sans-serif;
+                color: white;
+            }
+            canvas { width: 100%; height: 100%; }
+            input[type=range] { width: 50%; }
+            #container { position: relative; }
+            #container canvas, #overlay { position: absolute; }
+            #overlay { z-index: 1; width: 100%; }
+            #overlay div { padding: 5px; }
+            #loader {
+                border: 5px solid #f3f3f3; /* Light grey */
+                border-top: 5px solid #3d3d3d; /* Grey */
+                border-radius: 50%;
+                width: 40px;
+                height: 40px;
+                animation: spin 1s linear infinite;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                z-index: 2;
+            }
+            @keyframes spin {
+                0% { transform: rotate(0deg); }
+                100% { transform: rotate(360deg); }
+            }
+        </style>
     </head>
     <body>
         <div id="loader"></div> 
         <div id="container">
             <div id="overlay">
-              <div><h1>TRUSS</h1>
-                <div><h2>GEOMETRY</h2>
-                  <div>
-                    <label for="RH_IN:length">length</label>
-                    <input type="range" id="RH_IN:length" min="0" max="20" value="20" step="1">
-                  </div>
-                  <div>
-                    <label for="RH_IN:division"></label>division</label>
-                    <input type="range" id="RH_IN:division" min="2" max="6" value="6" step="2">
-                  </div>
-                  <div>
-                    <label for="RH_IN:initial height">initial height</label>
-                    <input type="range" id="RH_IN:initial height" min="0" max="10" value="1" step="0.5">
-                  </div>
-                  <div>
-                    <label for="RH_IN:height step">height step</label>
-                    <input type="range" id="RH_IN:height step" min="0" max="1" value="0.2" step="0.2">
-                  </div>
-                </div>
-                <div><h2>ANALYSIS INPUTS</h2>
-                  <div>
-                    <label for="RH_IN:CrossSection1">CrossSection1</label>
-                    <input type="range" id="RH_IN:CrossSection1" min="20" max="150" value="80" step="1">
-                  </div>
-                  <div id="Section1"> Slide to set cross section </div>
-                  <div>
-                    <label for="RH_IN:CrossSection2">CrossSection2</label>
-                    <input type="range" id="RH_IN:CrossSection2" min="20" max="140" value="50" step="1">
-                  </div>
-                  <div id="Section2"> Slide to set cross section </div>
-                  <div>
-                    <label for="RH_IN:Load">Uniform line load</label>
-                    <input type="range" id="RH_IN:Load"min="1" max="50" value="20" step="1">
-                  </div>
-              </div>
-
-              <div><h2>RESULTS</h2>
-              
                 <div>
-                  <label for="RH_IN:ShowMesh">ShowMesh</label>
-                  <input type="checkbox" id="RH_IN:ShowMesh" >
+                  <label for="length">length</label>
+                  <input type="range" id="length" min="0" max="100" value="20" step="1">
                 </div>
-                
-                <div id="Utilization"> See the utilization </div>
-
+                <div>
+                  <label for="division">division</label>
+                  <input type="range" id="division" min="0" max="10" value="6" step="1">
+                </div>
+                <div>
+                  <label for="initial height">initial height</label>
+                  <input type="range" id="initial height" min="0" max="10" value="2" step="1">
+                </div>
+                <div>
+                  <label for="height step">height step</label>
+                  <input type="range" id="height step" min="0" max="6" value="3" step="1">
+                </div>
+                <div>
+                  <label for="Flange section radius">Flange section radius</label>
+                  <input type="range" id="Flange section radius" min="1" max="8" value="3" step="1">
+                </div>
+                <div>
+                  <label for="Diagonal section radius">Diagonal section radius</label>
+                  <input type="range" id="Diagonal section radius" min="1" max="6" value="1" step="1">
+                </div>
                 <div><button id="downloadButton" disabled>Download</button></div>
-                <div><a href="truss-analysis2.gh" download="truss-analysis.gh.html">Save source code</a></div>
-           </div>
-        </div>
-
-<!-- /////////////////////////////////////////////////////////////////////////// -->
+                <div><a href="truss.gh" download="truss.gh.html">Save source code</a></div>
             </div>
         </div>
 
@@ -110,7 +79,7 @@ loader.setLibraryPath( 'https://cdn.jsdelivr.net/npm/rhino3dm@0.15.0-beta/' )
 
 // initialise 'data' object that will be used by compute()
 const data = {
-  definition: 'truss-analysis2.gh',
+  definition: 'truss.gh',
   inputs: getInputs()
 }
 
@@ -177,7 +146,7 @@ function init() {
     camera.position.set(1, -1, 1) // like perspective view
 
     // very light grey for background, like rhino
-    scene.background = new THREE.Color('whitesmoke')
+    scene.background = new THREE.Color('black')
 
     // create the renderer and add it to the html
     renderer = new THREE.WebGLRenderer({ antialias: true })
@@ -207,7 +176,7 @@ function init() {
  */
 async function compute() {
   // construct url for GET /solve/definition.gh?name=value(&...)
-  const url = new URL('/solve/' + data.definition, window.location.origin)
+  const url = new URL('/solve/truss.gh', window.location.origin)
   Object.keys(data.inputs).forEach(key => url.searchParams.append(key, data.inputs[key]))
   console.log(url.toString())
   
@@ -234,12 +203,6 @@ async function compute() {
 function collectResults(responseJson) {
 
     const values = responseJson.values
-    console.log()
-
-    let maxAxial = 0
-    let pipeSect1 = 0
-    let pipeSect2 = 0
-
 
     // clear doc
     if( doc !== undefined)
@@ -257,38 +220,12 @@ function collectResults(responseJson) {
         for( let j = 0; j < branch.length; j ++) {
           // ...load rhino geometry into doc
           const rhinoObject = decodeItem(branch[j])
-          // debugger;
-
-          if (values[i].ParamName == "RH_OUT:MaxUtilization") {
-            maxAxial = JSON.parse(responseJson.values[i].InnerTree['{ 0; }'][0].data)
-          }
-          if (values[i].ParamName == "RH_OUT:CrossSection1") {
-            pipeSect1 = JSON.parse(responseJson.values[i].InnerTree['{ 0; }'][0].data)
-          }
-          if (values[i].ParamName == "RH_OUT:CrossSection2") {
-            pipeSect2 = JSON.parse(responseJson.values[i].InnerTree['{ 0; }'][0].data)
-          }
-
-          console.log(values[i].ParamName)
           if (rhinoObject !== null) {
             doc.objects().add(rhinoObject, null)
           }
         }
       }
     }
-
-    //process data
-
-    // let maxAxial = JSON.parse(responseJson.values[1].InnerTree['{ 0; }'][0].data)
-    // let pipeSect1 = JSON.parse(responseJson.values[3].InnerTree['{ 0; }'][0].data)
-    // let pipeSect2 = JSON.parse(responseJson.values[2].InnerTree['{ 0; }'][0].data)
-    // console.log(maxAxial)
-    // console.log(pipeSect1)
-    // console.log(pipeSect2)
-
-    document.getElementById('Utilization').innerText = maxAxial
-    document.getElementById('Section1').innerText = pipeSect1
-    document.getElementById('Section2').innerText = pipeSect2
 
     if (doc.objects().count < 1) {
       console.error('No rhino objects to load!')
