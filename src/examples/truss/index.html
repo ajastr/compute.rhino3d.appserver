@@ -8,11 +8,17 @@
           body {
               margin: 0;
               font-family: monospace;
+              
           }
           canvas { width: 100%; height: 100%; }
           input[type=range] { width: 100%; }
           #container { position: relative; }
           #container canvas, #overlay { position: absolute; }
+
+          #truss {
+
+            color:#0e6863e7;
+        }
 /*///////////////////////////////////////////////////////////////////////////*/
           #overlay {
             z-index: 1;
@@ -24,7 +30,7 @@
 /*///////////////////////////////////////////////////////////////////////////*/
           #loader {
               border: 5px solid #8d8d8d; /* Light grey */
-              border-top: 5px solid #b8fa4d; /* Grey */
+              border-top: 5px solid #0e6863e7; /* Grey */
               border-radius: 50%;
               width: 40px;
               height: 40px;
@@ -44,7 +50,7 @@
         <div id="loader"></div> 
         <div id="container">
             <div id="overlay">
-              <div><h1>TRUSS</h1>
+              <div id="truss"><h1>TRUSS</h1></div>
                 <div><h2>GEOMETRY</h2>
                   <div>
                     <label for="RH_IN:length">length</label>
