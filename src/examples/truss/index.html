@@ -52,22 +52,18 @@
             <div id="overlay">
               <div id="truss"><h1>TRUSS</h1></div>
                 <div><h2>GEOMETRY</h2>
-                  <div>
-                    <label for="RH_IN:length">length</label>
-                    <input type="range" id="RH_IN:length" min="0" max="20" value="20" step="1">
-                  </div>
-                  <div>
-                    <label for="RH_IN:division"></label>division</label>
-                    <input type="range" id="RH_IN:division" min="2" max="6" value="6" step="2">
-                  </div>
-                  <div>
-                    <label for="RH_IN:initial height">initial height</label>
-                    <input type="range" id="RH_IN:initial height" min="0" max="10" value="1" step="0.5">
-                  </div>
-                  <div>
-                    <label for="RH_IN:height step">height step</label>
-                    <input type="range" id="RH_IN:height step" min="0" max="1" value="0.2" step="0.2">
-                  </div>
+                  <div id="length"> Length</div>
+                  <input type="range" id="RH_IN:length" min="0" max="20" value="20" step="1">
+
+                  <div id="division">Division </div>
+                  <input type="range" id="RH_IN:division" min="2" max="6" value="6" step="2">
+                  
+                  <div id="initH">Initial Heigth</div> 
+                  <input type="range" id="RH_IN:initial height" min="0" max="10" value="1" step="0.5">
+                  
+                  <div id="step">Step</div>
+                  <input type="range" id="RH_IN:height step" min="0" max="1" value="0.2" step="0.2">
+                  
                 </div>
                 <div><h2>ANALYSIS INPUTS</h2>
                   <div id="Section1"> Slide to set cross section </div>
@@ -167,6 +163,8 @@ function getInputs() {
   }
   return inputs
 }
+
+
 
 // more globals
 let scene, camera, renderer, controls
@@ -313,6 +311,11 @@ function collectResults(responseJson) {
     else{
     document.getElementById('Utilization').style.color = '#0e6863e7';
     }
+    console.log(getInputs())
+    document.getElementById("length").innerText = "Length is " + getInputs()["RH_IN:length"] + " m"
+    document.getElementById("division").innerText = "Divided in " + getInputs()["RH_IN:division"] + " parts"
+    document.getElementById("initH").innerText = "Initial height is " + getInputs()["RH_IN:initial height"] + " m"
+    document.getElementById("step").innerText = "Middle point is offset by " +Math.round(getInputs()["RH_IN:height step"]*100*getInputs()["RH_IN:division"]/2)/100  + " m"
 
     if (doc.objects().count < 1) {
       console.error('No rhino objects to load!')
