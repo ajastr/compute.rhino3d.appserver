@@ -22,7 +22,7 @@
 /*///////////////////////////////////////////////////////////////////////////*/
           #overlay {
             z-index: 1;
-            width: 250px;
+            width: 300px;
             height: 100vh;
             background-color: rgba(0,0,0,0.1);
           }
@@ -59,7 +59,7 @@
                   <input type="range" id="RH_IN:division" min="2" max="6" value="6" step="2">
                   
                   <div id="initH">Initial Heigth</div> 
-                  <input type="range" id="RH_IN:initial height" min="0" max="10" value="1" step="0.5">
+                  <input type="range" id="RH_IN:initial height" min="0" max="3" value="1" step="0.5">
                   
                   <div id="step">Step</div>
                   <input type="range" id="RH_IN:height step" min="0" max="1" value="0.2" step="0.2">
@@ -67,32 +67,26 @@
                 </div>
                 <div><h2>ANALYSIS INPUTS</h2>
                   <div id="Section1"> Slide to set cross section </div>
-                  <div>
-                    <label for="RH_IN:CrossSection1">CrossSection1</label>
-                    <input type="range" id="RH_IN:CrossSection1" min="20" max="150" value="80" step="1">
-                  </div>
-                  <div id="Section2"> Slide to set cross section </div>
-                  <div>
-                    <label for="RH_IN:CrossSection2">CrossSection2</label>
-                    <input type="range" id="RH_IN:CrossSection2" min="20" max="140" value="50" step="1">
-                  </div>
+                  <input type="range" id="RH_IN:CrossSection1" min="20" max="150" value="80" step="1">
                   
-                  <div>
-                    <label for="RH_IN:Load">Uniform line load</label>
-                    <input type="range" id="RH_IN:Load"min="1" max="50" value="20" step="1">
-                  </div>
+                  <div id="Section2"> Slide to set cross section </div>
+                  <input type="range" id="RH_IN:CrossSection2" min="20" max="140" value="50" step="1">
+
+                  <div id="Load">Load </div>
+                  <input type="range" id="RH_IN:Load"min="1" max="50" value="20" step="1">
+
               </div>
 
               <div><h2>RESULTS</h2>
               
                 <div>
-                  <label for="RH_IN:ShowMesh">ShowMesh</label>
+                  <label for="RH_IN:ShowMesh"><b> SHOW ANALYSIS MESH </b></label>
                   <input type="checkbox" id="RH_IN:ShowMesh" >
                 </div>
-                
-                <div id="Axial"> Slide to see Axial Force</div>
+                <br>
+                <div id="Axial"> Slide to see Axial Force</div><br>
                 <div id="Utilization"> Slide to see Utilization</div>
-
+                <br>
 
                 <div><button id="downloadButton" disabled>Download</button></div>
                 <div><a href="truss.gh" download="truss.gh.html">Save source code</a></div>
@@ -299,8 +293,8 @@ function collectResults(responseJson) {
 
     document.getElementById('Axial').innerText = maxAxial
     document.getElementById('Utilization').innerText = maxUtil
-    document.getElementById('Section1').innerText = pipeSect1
-    document.getElementById('Section2').innerText = pipeSect2
+    document.getElementById('Section1').innerText = "Cross Section 1 is " +pipeSect1
+    document.getElementById('Section2').innerText = "Cross Section 2 is " + pipeSect2
 
     let utilValue = maxUtil.split(" ")[3]
     console.log(utilValue)
@@ -316,6 +310,7 @@ function collectResults(responseJson) {
     document.getElementById("division").innerText = "Divided in " + getInputs()["RH_IN:division"] + " parts"
     document.getElementById("initH").innerText = "Initial height is " + getInputs()["RH_IN:initial height"] + " m"
     document.getElementById("step").innerText = "Middle point is offset by " +Math.round(getInputs()["RH_IN:height step"]*100*getInputs()["RH_IN:division"]/2)/100  + " m"
+    document.getElementById("Load").innerText = "Uniform line load is " + getInputs()["RH_IN:Load"] + " kN/m"
 
     if (doc.objects().count < 1) {
       console.error('No rhino objects to load!')
