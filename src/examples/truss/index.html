@@ -304,6 +304,16 @@ function collectResults(responseJson) {
     document.getElementById('Section1').innerText = pipeSect1
     document.getElementById('Section2').innerText = pipeSect2
 
+    let utilValue = maxUtil.split(" ")[3]
+    console.log(utilValue)
+    if (utilValue>100){
+    console.log("Bigger Than 100%!")
+    document.getElementById('Utilization').style.color = 'red'
+    }
+    else{
+    document.getElementById('Utilization').style.color = '#0e6863e7';
+    }
+
     if (doc.objects().count < 1) {
       console.error('No rhino objects to load!')
       showSpinner(false)
